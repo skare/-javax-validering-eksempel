@@ -1,15 +1,19 @@
-package com.kes.javax.validering.eksempel;
+package com.kes.javax.validering.eksempel.service;
 
 import com.kes.javax.validering.eksempel.api.KattDto;
 import com.kes.javax.validering.eksempel.api.VerditakstForespoerselDto;
 import com.kes.javax.validering.eksempel.api.VerditakstResponsDto;
 import com.kes.javax.validering.eksempel.exception.KanIkkeBareHaSoveromException;
 import com.kes.javax.validering.eksempel.exception.KanIkkeHaFlereSoveromEnnRomException;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-class VerditakstService {
-    static VerditakstResponsDto behandleForespoersel(VerditakstForespoerselDto forespoersel) {
+@Service
+public class VerditakstService {
+    public VerditakstResponsDto behandleForespoersel(VerditakstForespoerselDto forespoersel) {
+        validerForespoersel(forespoersel);
+
         Integer kostnad = 1000;
         LocalDate gyldighet = LocalDate.now().plusDays(30);
         Integer verdi = beregnVerdi(forespoersel);
@@ -17,7 +21,7 @@ class VerditakstService {
         return new VerditakstResponsDto(kostnad, gyldighet, verdi);
     }
 
-    static void validerForespoersel(VerditakstForespoerselDto forespoersel) {
+    private static void validerForespoersel(VerditakstForespoerselDto forespoersel) {
         if (forespoersel.getAntallSoverom().equals(forespoersel.getTotaltAntallRom())) {
             throw new KanIkkeBareHaSoveromException();
         }
