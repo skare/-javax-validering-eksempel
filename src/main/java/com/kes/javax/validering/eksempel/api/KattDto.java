@@ -1,11 +1,13 @@
 package com.kes.javax.validering.eksempel.api;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 public class KattDto {
 
     @PositiveOrZero
+    @NotNull
     private Integer antallFuglerFanget;
 
     @NotBlank
